@@ -1,30 +1,30 @@
-package server.api
+package server.features.authorization
 
-import server.service.AuthService
+import server.features.authorization.AuthService
 import shared.protocol.Response
 import shared.protocol.Status
 import shared.protocol.data.AuthData
 
 object AuthApi {
     fun handleSignIn(data: AuthData): Response {
-        return try {
+        try {
             val userName = data.userName
             val password = data.password
 
-            AuthService.signIn(userName, password)
+            return AuthService.signIn(userName, password)
         } catch (e: Exception) {
-            Response(Status.ERROR, e.message ?: "Invalid request")
+            return Response(Status.ERROR, e.message ?: "Invalid request")
         }
     }
 
     fun handleSignUp(data: AuthData): Response {
-        return try {
+        try {
             val userName = data.userName
             val password = data.password
 
-            AuthService.signUp(userName, password)
+            return AuthService.signUp(userName, password)
         } catch (e: Exception) {
-            Response(Status.ERROR, e.message ?: "Invalid request")
+            return Response(Status.ERROR, e.message ?: "Invalid request")
         }
     }
 }

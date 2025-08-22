@@ -5,17 +5,24 @@ import java.io.FileInputStream
 import java.security.KeyStore
 import javax.net.ssl.*
 
+private var serverSocket: SSLServerSocket? = null
+private var running = true
+
 fun main() {
-    val port = 8888
-//    val serverSocket = ServerSocket(port)
     val serverSocket = startSecureServer()
 
+    Runtime.getRuntime().addShutdownHook(Thread {
+        stop()
+    })
 
-    println("Server listening on port $port")
-
-    while (true) {
+    while (running) {
+        try {
         val clientSocket = serverSocket.accept()
         Thread { ClientHandler.handle(clientSocket) }.start()
+        }
+        catch (e: Exception) {
+            println(e.message)
+        }
     }
 }
 
@@ -45,11 +52,15 @@ fun startSecureServer(): SSLServerSocket {
     val serverSocket = serverSocketFactory.createServerSocket(port) as SSLServerSocket
     serverSocket.needClientAuth = true
 
-    return serverSocket
+    println("Server listening on port $port")
 
-//    appendMsg("Server started on port $port with mTLS.")
-//    while (true) {
-//        val client = serverSocket.accept()
-//        handleClient(client)
-//    }
+    return serverSocket
+}
+
+fun stop() {
+    println("Stopping server...")
+    running = false
+    try {
+        serverSocket?.close()
+    } catch (_: Exception) {}
 }

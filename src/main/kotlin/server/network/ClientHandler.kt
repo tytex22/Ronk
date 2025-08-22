@@ -2,7 +2,7 @@ package server.network
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import server.api.AuthApi
+import server.features.authorization.AuthApi
 import shared.protocol.Command
 import shared.protocol.Request
 import shared.protocol.Response

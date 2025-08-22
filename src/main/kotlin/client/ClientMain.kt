@@ -1,16 +1,16 @@
 package client
 
 import client.network.SecureClientConnection
-import client.ui.AppWindow
-import client.ui.AuthWindow
+import client.features.app.AppUI
+import client.features.authorization.AuthUI
 
 fun main() {
     SecureClientConnection.start()
     Thread.sleep(2000) // wait for connection
 
-    AuthWindow.apply {
+    AuthUI.apply {
         setOnSignInSuccess {
-            AppWindow.isVisible = true
+            AppUI.isVisible = true
         }
         isVisible = true
     }

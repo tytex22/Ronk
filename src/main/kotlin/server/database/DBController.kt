@@ -7,7 +7,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
-object DBHelper {
+object  DBController {
     private const val DB_URL = "jdbc:sqlite:src/main/kotlin/server/database/database.db"
 
     init {

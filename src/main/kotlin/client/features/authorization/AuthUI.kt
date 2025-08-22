@@ -1,26 +1,12 @@
-package client.ui
+package client.features.authorization
 
 import client.network.SecureClientConnection
-import client.service.AuthService
-import java.awt.BorderLayout
-import java.awt.CardLayout
-import java.awt.Dimension
-import java.awt.FlowLayout
+import java.awt.*
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
-import javax.swing.Box
-import javax.swing.BoxLayout
-import javax.swing.JButton
-import javax.swing.JFrame
-import javax.swing.JLabel
-import javax.swing.JOptionPane
-import javax.swing.JPanel
-import javax.swing.JPasswordField
-import javax.swing.JTextField
-import javax.swing.SwingConstants
-import javax.swing.SwingUtilities
+import javax.swing.*
 
-object AuthWindow : JFrame("Main Application"){
+object AuthUI : JFrame("Main Application"){
     private var onSignInSuccess: (() -> Unit)? = null
 
     fun setOnSignInSuccess(listener: () -> Unit) {
@@ -46,7 +32,7 @@ object AuthWindow : JFrame("Main Application"){
 
 
     init {
-        setSize(200, 400)
+        setSize(300, 400)
         isResizable = false
         // Set default close operation
         defaultCloseOperation = EXIT_ON_CLOSE
@@ -83,7 +69,7 @@ object AuthWindow : JFrame("Main Application"){
         val signInButton = JButton("Sign In").apply {
             alignmentX = CENTER_ALIGNMENT
             addActionListener {
-                val result = AuthService.handleSignIn(
+                val result = AuthApi.signIn(
                     signInUserNameInput.text,
                     String(signInPasswordInput.password)
                 )
@@ -149,7 +135,7 @@ object AuthWindow : JFrame("Main Application"){
         val signInButton = JButton("Sign Up").apply {
             alignmentX = CENTER_ALIGNMENT
             addActionListener {
-                val result = AuthService.handleSignUp(
+                val result = AuthApi.signUp(
                     signUpUserNameInput.text,
                     String(signUpPasswordInput.password),
                     String(signUpPasswordInput2.password)

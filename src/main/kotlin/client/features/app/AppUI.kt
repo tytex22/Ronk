@@ -1,4 +1,4 @@
-package client.ui
+package client.features.app
 
 import client.network.SecureClientConnection
 import java.awt.event.WindowAdapter
@@ -7,7 +7,7 @@ import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.SwingConstants
 
-object AppWindow : JFrame("Main Application") {
+object AppUI : JFrame("Main Application") {
     init {
         setSize(800, 600)
         defaultCloseOperation = EXIT_ON_CLOSE

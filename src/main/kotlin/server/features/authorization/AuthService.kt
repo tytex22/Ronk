@@ -1,7 +1,8 @@
 package server.features.authorization
 
-import server.database.DBController
+import server.database.DatabaseManager
 import server.database.DBResult
+import server.database.dao.UserDAO
 import server.util.PasswordHasher
 import server.util.Validation
 import shared.protocol.Response
@@ -10,11 +11,11 @@ import shared.protocol.data.UserData
 
 object AuthService {
     init {
-        DBController.createTable()
+        DatabaseManager.createTable()
     }
 
     fun signIn(userName: String, password: String): Response {
-        when (val query: DBResult = DBController.getUser(userName)) {
+        when (val query: DBResult = UserDAO.findByUserName(userName)) {
             is DBResult.ResponseOnly -> return query.response
             is DBResult.WithData -> {
                 val data = query.data as UserData
@@ -33,7 +34,7 @@ object AuthService {
 
         if (!isStrong) return Response(Status.FAIL, notStrongReason)
 
-        when (val query: DBResult = DBController.getUser(userName)) {
+        when (val query: DBResult = UserDAO.findByUserName(userName)) {
             is DBResult.WithData -> return Response(Status.FAIL, "username already taken")
             is DBResult.ResponseOnly -> {
                 val status = query.response.status
@@ -42,7 +43,7 @@ object AuthService {
                 } else {
                     val salt = PasswordHasher.generateSalt()
                     val hashedPassword = PasswordHasher.hashPassword(password, salt)
-                    val insertResult = DBController.insertUser(userName, hashedPassword, salt)
+                    val insertResult = UserDAO.insertUser(userName, hashedPassword, salt)
                     return insertResult.response
                 }
             }

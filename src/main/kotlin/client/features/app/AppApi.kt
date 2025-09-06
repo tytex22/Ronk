@@ -15,8 +15,8 @@ object AppApi {
 
         return when (response.status) {
             Status.SUCCESS -> (response.data as ClassesList).classesList
-            Status.ERROR -> listOf("${response.message}")
             Status.FAIL -> listOf("${response.message}")
+            Status.ERROR -> listOf("${response.message}")
         }
     }
 

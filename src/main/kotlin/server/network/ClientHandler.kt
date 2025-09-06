@@ -1,6 +1,5 @@
 package server.network
 
-import client.features.app.AppApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import server.features.authorization.AuthApi
@@ -10,7 +9,6 @@ import shared.protocol.Request
 import shared.protocol.Response
 import shared.protocol.Status
 import shared.protocol.data.AuthData
-import shared.protocol.data.ClassesList
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
@@ -37,12 +35,12 @@ object ClientHandler {
                     return
                 }
 
-                val response = when(request.command) {
+                val response = when (request.command) {
                     Command.SIGN_IN -> AuthApi.handleSignIn(request.data as AuthData)
                     Command.SIGN_UP -> AuthApi.handleSignUp(request.data as AuthData)
-                    Command.GET_CLASSES_LIST -> AppApi.getClassesList()
+                    Command.GET_CLASSES_LIST -> ClassesApi.handleGetClasses()
                 }
-                print(response)
+                println(response)
                 writer.println(Json.encodeToString(response))
             }
 

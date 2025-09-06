@@ -1,7 +1,6 @@
 package shared.protocol
 
 import kotlinx.serialization.Serializable
-import shared.protocol.data.AuthData
 import shared.protocol.data.ClientData
 
 @Serializable

@@ -3,10 +3,8 @@ package server.database
 import server.database.DatabaseManager.insertClass
 import shared.protocol.Response
 import shared.protocol.Status
-import shared.protocol.data.UserData
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.SQLException
 
 object  DatabaseManager {
     private const val DB_URL = "jdbc:sqlite:src/main/kotlin/server/database/database.db"

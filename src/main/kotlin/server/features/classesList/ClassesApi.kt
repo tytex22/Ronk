@@ -1,9 +1,7 @@
 package server.features.classesList
 
-import server.features.authorization.AuthService
 import shared.protocol.Response
 import shared.protocol.Status
-import shared.protocol.data.ClassesList
 
 object ClassesApi {
     fun handleGetClasses(): Response {
@@ -11,7 +9,7 @@ object ClassesApi {
             println("classesApi")
             ClassesService.getClassesList()
         } catch (e: Exception) {
-            Response(Status.ERROR, "In classesAPI: ${e.message}" ?: "Invalid request")
+            Response(Status.ERROR, e.message ?: "Invalid request")
         }
     }
 }

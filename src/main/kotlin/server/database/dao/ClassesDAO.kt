@@ -6,7 +6,6 @@ import shared.protocol.Response
 import shared.protocol.Status
 import shared.protocol.data.ClassesList
 import java.sql.SQLException
-import kotlin.use
 
 object ClassesDAO {
     fun getAllClasses() : DBResult {
@@ -25,9 +24,9 @@ object ClassesDAO {
                 }
             }
         } catch (e: SQLException) {
-            return DBResult.ResponseOnly(Response(Status.ERROR, "SQLException in dao: ${ e.message }" ?: "Database error"))
+            return DBResult.ResponseOnly(Response(Status.ERROR, e.message ?: "Database error"))
         } catch (e: Exception) {
-            return DBResult.ResponseOnly(Response(Status.ERROR, "Exception in dao: ${e.message}" ?: "Unexpected error"))
+            return DBResult.ResponseOnly(Response(Status.ERROR, e.message ?: "Unexpected error"))
         }
     }
 }

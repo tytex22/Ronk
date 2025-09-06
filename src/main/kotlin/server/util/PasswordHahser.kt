@@ -1,5 +1,6 @@
 package server.util
 
+import server.util.PasswordHasher.verifyPassword
 import java.security.MessageDigest
 import java.security.SecureRandom
 import java.util.Base64

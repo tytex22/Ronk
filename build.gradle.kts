@@ -15,6 +15,7 @@ dependencies {
     implementation("org.json:json:20240303")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("org.xerial:sqlite-jdbc:3.45.1.0")
+    implementation("com.fazecast:jSerialComm:2.9.3")
 }
 
 tasks.test {

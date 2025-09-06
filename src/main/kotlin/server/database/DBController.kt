@@ -1,5 +1,6 @@
 package server.database
 
+import server.database.DBController.insertClass
 import shared.protocol.Response
 import shared.protocol.Status
 import shared.protocol.data.UserData
@@ -76,6 +77,35 @@ object  DBController {
             DBResult.ResponseOnly(Response(Status.ERROR, e.message ?: "Unexpected error"))
         }
     }
-//
+
+    fun insertClass(classID: Short, className: String): DBResult {
+        val cl = classID.toBlob()
+        val sql = "INSERT INTO classes(classID, className) VALUES (?, ?)"
+        return try {
+            getConnection().use { conn ->
+                conn.prepareStatement(sql).use { stmt ->
+                    stmt.setBytes(1, cl)
+                    stmt.setString(2, className)
+                    stmt.executeUpdate()
+                    DBResult.ResponseOnly(Response(Status.SUCCESS))
+                }
+            }
+        } catch (e: Exception) {
+            println("Insert failed: ${e.message}")
+            DBResult.ResponseOnly(Response(Status.FAIL, e.message))
+        }
+    }
+
+    fun Short.toBlob(): ByteArray {
+        return byteArrayOf(
+            ((toInt() shr 8) and 0xFF).toByte(),
+            (toInt() and 0xFF).toByte()
+        )
+    }
+
+
 }
 
+fun main() {
+    insertClass(12345, "Test")
+}

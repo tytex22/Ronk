@@ -1,6 +1,5 @@
 package server.database
 
-import server.database.DatabaseManager.insertClass
 import shared.protocol.Response
 import shared.protocol.Status
 import java.sql.Connection
@@ -67,6 +66,6 @@ object  DatabaseManager {
 
 }
 
-fun main() {
-    insertClass(12345, "Test")
-}
+//fun main() {
+//    insertClass(12345, "Test")
+//}

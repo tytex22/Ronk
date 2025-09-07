@@ -1,6 +1,5 @@
 package client.features.NFC
 
-import client.features.NFC.NFC.hexStringToByteArray
 import com.fazecast.jSerialComm.SerialPort
 
 object NFC {
@@ -37,7 +36,7 @@ object NFC {
     }
 }
 
-fun main() {
-    val hex: ByteArray? = NFC.getUID()
-    if (hex != null) println("hex: $hex") else println("null")
-}
+//fun main() {
+//    val hex: ByteArray? = NFC.getUID()
+//    if (hex != null) println("hex: $hex") else println("null")
+//}

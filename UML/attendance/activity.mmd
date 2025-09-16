@@ -1,0 +1,48 @@
+stateDiagram-v2
+    [*] --> UI
+    state UI {
+        clickBTN
+    }
+
+%%    state Server{
+        checkInStudentService
+        state doesStudentExist <<choice>>
+
+        state doesRoomExist <<choice>>
+        state doesStudentInAttendanceTable <<choice>>
+
+
+        insertHim
+        removeLineFromTable
+%%    }
+%%    state client {
+        UI
+        readNFC
+        findUSBPort
+        state found <<choice>>
+
+%%    }
+%%    state connection {
+        checkInStudentRequest
+        offerToAdd
+%%    }
+    clickBTN --> readNFC
+    readNFC --> findUSBPort
+    findUSBPort --> found: found?
+    found --> UI: no<br>show message
+    found --> checkInStudentRequest: yes
+    checkInStudentRequest --> checkInStudentService
+    checkInStudentService-->doesStudentExist: does student exist?
+    doesStudentExist-->doesRoomExist: does room exist?
+    doesRoomExist-->offerToAdd: at least one don't
+    doesRoomExist-->doesStudentInAttendanceTable: both do<br><br>does the student is in attendance table?
+    doesStudentInAttendanceTable-->insertHim: no
+    doesStudentInAttendanceTable-->removeLineFromTable: yes
+    removeLineFromTable-->insertHim
+    insertHim-->[*]: return Response
+    offerToAdd-->[*]
+
+
+
+
+

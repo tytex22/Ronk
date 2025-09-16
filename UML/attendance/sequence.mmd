@@ -1,0 +1,63 @@
+sequenceDiagram
+
+box black client
+    actor User
+    participant AppUI
+    participant AppService
+    participant NFC
+    participant AppApi
+end
+
+box black server
+    participant sAppApi as AppApi(server)
+    participant sAppService as AppService(server)
+    participant RoomDAO
+end
+
+
+
+User->>AppUI: checkInButton
+AppUI->>AppService: checkInStudent
+AppService->>+NFC: readNFC
+NFC-->>-AppService: StudentID
+AppService->>AppApi: checkInStudent
+AppApi-)sAppApi: request
+sAppApi->>sAppService: hundleCheckInStudent
+sAppService->>RoomDAO: getStudentIfExist
+sAppService->>RoomDAO: getRoomIfExist
+RoomDAO-->>sAppService: studentID
+RoomDAO-->>sAppService: roomID
+sAppService->>sAppService: validateResults
+sAppService-->>sAppApi: Response
+sAppApi-->>AppApi: Response
+AppApi-->>AppService: Response
+AppService-->>AppUI: ShowAttendancePopup
+
+opt noStudentOrRoom
+    AppUI->>AppUI: addNewStudent/Room
+    AppUI->>AppService: details
+    alt onlyStudent
+        AppService->>AppApi:addNewStudent
+    else onlyRoom
+        AppService->>AppApi:addNewRoom
+    else bothStudentAndRoom
+        AppService->>AppApi:addNewStudentAndNewRoom
+    end
+    AppApi->>sAppApi: Request
+    sAppApi->>sAppService: addNew...
+    sAppService->>RoomDAO: addNew...
+    RoomDAO-->>sAppService: Response
+    sAppService-->>sAppApi: Response
+    sAppApi-->>AppApi: Response
+    AppApi-->>AppService: Response
+    AppService-->>AppUI: [showSuccessLabel]
+
+end
+
+
+
+
+
+
+
+

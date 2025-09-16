@@ -1,6 +1,6 @@
 package client.features.app
 
-import client.features.NFC.NFC.getUID
+import client.features.NFC.NFC.readNFC
 import client.network.SecureClientConnection
 import java.awt.*
 import java.awt.event.WindowAdapter
@@ -41,14 +41,14 @@ object AppUI : JFrame("Main Application") {
 ////        panel.border = BorderFactory.createEmptyBorder(20, 20, 20, 20)
 ////
 ////        contentPane.add(panel)*/
-        setupUI()
+        initWindow()
 //        loadClasses()
 
     }
 
 
 
-    private fun setupUI() {
+    private fun initWindow() {
         layout = BorderLayout()
 
         // Main panel
@@ -74,7 +74,7 @@ object AppUI : JFrame("Main Application") {
         val bottomPanel = JPanel(BorderLayout())
         val scanButton = JButton("Scan NFC").apply {
             preferredSize = Dimension(120, 40)
-            addActionListener { getUID() }
+            addActionListener { readNFC() }
         }
 
         val buttonPanel = JPanel(FlowLayout())
@@ -87,6 +87,33 @@ object AppUI : JFrame("Main Application") {
         // Store reference to grid panel for later use
         gridPanel.name = "gridPanel"
     }
+
+    private fun openAttendanceWindow(): Unit = TODO()
+
+    private fun openCreatorWindow(): Unit = TODO()
+
+    private fun createNewItem(): Unit = TODO()
+
+    private fun checkInStudent(): Unit = TODO()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 //    private fun loadClasses() {
 //        val gridPanel = findGridPanel()
@@ -389,5 +416,4 @@ object AppUI : JFrame("Main Application") {
 //    fun refreshClasses() {
 //        loadClasses()
 //    }
-}
 

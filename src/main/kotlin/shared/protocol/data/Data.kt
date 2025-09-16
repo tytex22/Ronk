@@ -18,4 +18,4 @@ data class AuthData(val userName: String, val password: String) : ClientData
 data class UserData(val storedUserName: String, val storedPassword: String, val salt: String) : ServerData
 
 @Serializable
-data class ClassesList(val classesList: List<String>) : ServerData
+data class RoomList(val roomList: List<String>) : ServerData

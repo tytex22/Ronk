@@ -3,7 +3,7 @@ package server.network
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import server.features.authorization.AuthApi
-import server.features.classesList.ClassesApi
+import server.features.app.AppApi
 import shared.protocol.Command
 import shared.protocol.Request
 import shared.protocol.Response
@@ -38,7 +38,7 @@ object ClientHandler {
                 val response = when (request.command) {
                     Command.SIGN_IN -> AuthApi.handleSignIn(request.data as AuthData)
                     Command.SIGN_UP -> AuthApi.handleSignUp(request.data as AuthData)
-                    Command.GET_CLASSES_LIST -> ClassesApi.handleGetClasses()
+                    Command.GET_CLASSES_LIST -> AppApi.handleGetRoomList()
                 }
                 println(response)
                 writer.println(Json.encodeToString(response))

@@ -3,7 +3,8 @@ package client.features.NFC
 import com.fazecast.jSerialComm.SerialPort
 
 object NFC {
-    fun getUID(): ByteArray? {
+
+    fun readNFC(): ByteArray? {
         val port = SerialPort.getCommPort("/dev/ttyUSB0")
         port.baudRate = 9600
         port.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0) // block until data
@@ -28,7 +29,9 @@ object NFC {
         }
     }
 
-    fun hexStringToByteArray(s: String): ByteArray {
+    private fun findUSBPort(): SerialPort = TODO()
+
+    private fun hexStringToByteArray(s: String): ByteArray {
         val cleaned = s.trim().uppercase()
         return ByteArray(cleaned.length / 2) { i ->
             cleaned.substring(2 * i, 2 * i + 2).toInt(16).toByte()

@@ -1,0 +1,59 @@
+classDiagram
+direction LR
+
+namespace clientside {
+    class AppUI {
+        <<Object>>
+        -initWindow() Unit
+        +openAttendaceWindow(roomName) Unit
+        +openCreatorWindow() Unit
+        -createNewItem() Unit
+        +checkInStudent()
+    }
+    class NFC {
+        <<Object>>
+        +readNFC() ByteArray
+        -findUSBPort() SerialPort
+    }
+    class AppApi {
+        <<Object>>
+        +getRoomList() List~String~
+        +getAttendanceList(roomName) JSON
+        +checkInStudent(roomID, studentID) Response
+        +addNewStudent(studentName, studentID) Response
+        +addNewRoom(roomName, roomID) Response
+        +addStudentAndRoom() Response
+    }
+}
+namespace serverside {
+    class sAppApi {
+        <<Object>>
+        +handleGetRoomList() Response
+        +handleGetAttendanceList(roomName) Response
+        +handleCheckInStudent(roomID, studentID) Response
+        +handleAddNewStudent(studentName, studentID) Response
+        +handleAddNewRoom(roomName, roomID) Response
+    }
+    class sAppService {
+        <<Object>>
+        +getRoomList() Response
+        +getAttendanceList(roomName) Response
+        +checkInStudent(roomID, studentID) Reponse
+        +addNewStudent(studentName, studentID)
+        +addNewRoom(roomName, roomID)
+    }
+    class RoomsDAO {
+        <<Object>>
+        +getRoomList() List~String~?
+        +getAttendanceList(roomName) JSON?
+        +getStudentIfExist(studentID) Student?
+        +getRoomIfExist(roomID) Room?
+        +addNewStudent(studetName, studentID)
+        +addNewRoom(roomName,roomID)
+    }
+}
+
+AppUI --> NFC
+AppUI --> AppApi
+sAppService --> RoomsDAO
+sAppApi --> sAppService

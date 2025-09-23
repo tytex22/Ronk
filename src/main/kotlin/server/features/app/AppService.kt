@@ -2,6 +2,7 @@ package server.features.app
 
 import server.database.DBResult
 import server.database.dao.RoomDAO
+import server.database.dao.StudentDAO
 import shared.protocol.Response
 import shared.protocol.Status
 
@@ -24,9 +25,21 @@ object AppService {
 
     fun checkInStudent(roomID: String, studentID: ByteArray): Response = TODO()
 
-    fun addNewStudent(studentName: String, studentID: ByteArray): Response = TODO()
+    fun addNewStudent(studentName: String, studentID: ByteArray): Response {
+        StudentDAO.insertStudent(studentName, studentID)
 
-    fun addNewRoom(roomName: String, roomID: String): Response = TODO()
+        return if (StudentDAO.checkIfStudentExists(studentID)) {
+            Response(Status.SUCCESS)
+        } else Response(Status.FAIL)
+    }
+
+    fun addNewRoom(roomName: String, roomID: ByteArray): Response {
+        RoomDAO.insertRoom(roomID, roomName)
+
+        return if (RoomDAO.checkIfRoomExists(roomID)) {
+            Response(Status.SUCCESS)
+        } else Response(Status.FAIL)
+    }
 
 }
 

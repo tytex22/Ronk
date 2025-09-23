@@ -6,6 +6,8 @@ import shared.protocol.Command
 import shared.protocol.Request
 import shared.protocol.Response
 import shared.protocol.Status
+import shared.protocol.data.AddNewData
+import shared.protocol.data.ClientData
 import shared.protocol.data.RoomList
 
 object AppApi {
@@ -23,15 +25,22 @@ object AppApi {
 
     fun getAttendanceList(roomName: String): Json = TODO()
 
-    fun checkInStudent(roomID: String, studentID: ByteArray): Response = TODO()
+    fun checkInStudent(studentID: ByteArray, roomID: String): Response = TODO()
 
-    fun addNewStudent(studentName: String, studentID: ByteArray): Response = TODO()
+    fun addNewStudent(studentName: String, studentID: ByteArray): Response {
+        val request = Request(Command.ADD_NEW_STUDENT, AddNewData(studentName, studentID))
+        val response = SecureClientConnection.sendCommand(request)
+        return response
+    }
 
-    fun addNewRoom(roomName: String, roomID: String): Response = TODO()
+    fun addNewRoom(roomName: String, roomID: ByteArray): Response {
+        val request = Request(Command.ADD_NEW_ROOM, AddNewData(roomName, roomID))
+        val response = SecureClientConnection.sendCommand(request)
+        return response
+    }
 
-    fun addNewStudentAndNewRoom(studentName: String, studentID: ByteArray, roomName: String, roomID: String): Response {
+    fun addNewStudentAndNewRoom(studentName: String, studentID: ByteArray, roomName: String, roomID: ByteArray) {
         addNewStudent(studentName, studentID)
         addNewRoom(roomName, roomID)
-        TODO()
     }
 }

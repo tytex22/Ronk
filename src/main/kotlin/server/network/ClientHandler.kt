@@ -8,6 +8,7 @@ import shared.protocol.Command
 import shared.protocol.Request
 import shared.protocol.Response
 import shared.protocol.Status
+import shared.protocol.data.AddNewData
 import shared.protocol.data.AuthData
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -39,6 +40,9 @@ object ClientHandler {
                     Command.SIGN_IN -> AuthApi.handleSignIn(request.data as AuthData)
                     Command.SIGN_UP -> AuthApi.handleSignUp(request.data as AuthData)
                     Command.GET_CLASSES_LIST -> AppApi.handleGetRoomList()
+                    Command.CHECK_IN_STUDENT -> TODO()
+                    Command.ADD_NEW_STUDENT -> AppApi.handleAddNewStudent(request.data as AddNewData)
+                    Command.ADD_NEW_ROOM -> AppApi.handleAddNewRoom(request.data as AddNewData)
                 }
                 println(response)
                 writer.println(Json.encodeToString(response))
